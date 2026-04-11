@@ -1,97 +1,68 @@
 ---
 import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Query both collections
 const allProjects = await getCollection('projects');
 const allPublications = await getCollection('publications');
 
-// Filter for featured entries
-const featuredProjects = allProjects.filter((p) => p.data.featured);
-const featuredPublications = allPublications.filter((p) => p.data.featured);
+const featuredProjects = allProjects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-// Sort featured publications by date (newest first)
-featuredPublications.sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
-);
-
-// Sort featured projects by date (newest first)
-featuredProjects.sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
-);
+const featuredPublications = allPublications
+  .filter((p) => p.data.featured)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Jimmy P. Le</title>
-  </head>
-  <body>
-    <header>
-      <h1>Jimmy P. Le</h1>
-      <p>
-        I build NLP systems and am finishing a PhD on explainable
-        biomedical question answering at Virginia Commonwealth University.
-      </p>
-    </header>
+<BaseLayout title="Jimmy P. Le">
+  <section>
+    <h1>Jimmy P. Le</h1>
+    <p>
+      I build NLP systems and am finishing a PhD on explainable
+      biomedical question answering at Virginia Commonwealth University.
+    </p>
+  </section>
 
-    <main>
-      <section>
-        <h2>Featured Projects</h2>
-        {featuredProjects.length === 0 && <p>No featured projects yet.</p>}
-        <ul>
-          {featuredProjects.map((project) => (
-            <li>
-              <h3>{project.data.title}</h3>
-              <p><em>Status: {project.data.status}</em></p>
-              <p>{project.data.description}</p>
-              {project.data.tech && (
-                <p>
-                  <small>Tech: {project.data.tech.join(', ')}</small>
-                </p>
-              )}
-              {project.data.github && (
-                <p>
-                  <a href={project.data.github}>GitHub →</a>
-                </p>
-              )}
-            </li>
-          ))}
-        </ul>
-      </section>
+  <section>
+    <h2>Featured Projects</h2>
+    {featuredProjects.length === 0 && <p>No featured projects yet.</p>}
+    <ul>
+      {featuredProjects.map((project) => (
+        <li>
+          <h3>
+            <a href={`/projects/${project.id}`}>{project.data.title}</a>
+          </h3>
+          <p><em>Status: {project.data.status}</em></p>
+          <p>{project.data.description}</p>
+          {project.data.tech && (
+            <p><small>Tech: {project.data.tech.join(', ')}</small></p>
+          )}
+        </li>
+      ))}
+    </ul>
+    <p><a href="/projects">All projects →</a></p>
+  </section>
 
-      <section>
-        <h2>Featured Publications</h2>
-        {featuredPublications.length === 0 && (
-          <p>No featured publications yet.</p>
-        )}
-        <ul>
-          {featuredPublications.map((pub) => (
-            <li>
-              <h3>{pub.data.title}</h3>
-              <p>
-                {pub.data.authors.join(', ')}
-              </p>
-              <p>
-                <em>
-                  {pub.data.venue_short ?? pub.data.venue} · {pub.data.year}
-                  {pub.data.status === 'in_preparation' && ' · In preparation'}
-                  {pub.data.status === 'under_review' && ' · Under review'}
-                </em>
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </main>
-
-    <footer>
-      <p>
-        <a href="https://github.com/jimmyphuocle">GitHub</a> ·
-        <a href="https://scholar.google.com">Google Scholar</a> ·
-        <a href="mailto:lejp3@vcu.edu">Email</a>
-      </p>
-    </footer>
-  </body>
-</html>
+  <section>
+    <h2>Featured Publications</h2>
+    {featuredPublications.length === 0 && (
+      <p>No featured publications yet.</p>
+    )}
+    <ul>
+      {featuredPublications.map((pub) => (
+        <li>
+          <h3>{pub.data.title}</h3>
+          <p>{pub.data.authors.join(', ')}</p>
+          <p>
+            <em>
+              {pub.data.venue_short ?? pub.data.venue} · {pub.data.year}
+              {pub.data.status === 'in_preparation' && ' · In preparation'}
+              {pub.data.status === 'under_review' && ' · Under review'}
+            </em>
+          </p>
+        </li>
+      ))}
+    </ul>
+    <p><a href="/publications">All publications →</a></p>
+  </section>
+</BaseLayout>

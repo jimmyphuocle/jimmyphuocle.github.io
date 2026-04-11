@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const allProjects = await getCollection('projects');
+
+// Sort by date, newest first
+const sortedProjects = allProjects.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+// Group by status
+const activeProjects = sortedProjects.filter((p) => p.data.status === 'active');
+const completedProjects = sortedProjects.filter((p) => p.data.status === 'completed');
+const archivedProjects = sortedProjects.filter((p) => p.data.status === 'archived');
+---
+
+<BaseLayout title="Projects — Jimmy P. Le">
+  <section>
+    <h1>Projects</h1>
+    <p>
+      Things I'm building and have built. Most are at the intersection of
+      NLP, biomedical informatics, and ML systems engineering.
+    </p>
+  </section>
+
+  {activeProjects.length > 0 && (
+    <section>
+      <h2>Active</h2>
+      <ul>
+        {activeProjects.map((project) => (
+          <li>
+            <h3>
+              <a href={`/projects/${project.id}`}>{project.data.title}</a>
+            </h3>
+            <p>{project.data.description}</p>
+            {project.data.tech && (
+              <p><small>Tech: {project.data.tech.join(', ')}</small></p>
+            )}
+            {project.data.collaborators && (
+              <p><small>With: {project.data.collaborators.join(', ')}</small></p>
+            )}
+            {project.data.github && (
+              <p><a href={project.data.github}>GitHub →</a></p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {completedProjects.length > 0 && (
+    <section>
+      <h2>Completed</h2>
+      <ul>
+        {completedProjects.map((project) => (
+          <li>
+            <h3>
+              <a href={`/projects/${project.id}`}>{project.data.title}</a>
+            </h3>
+            <p>{project.data.description}</p>
+            {project.data.tech && (
+              <p><small>Tech: {project.data.tech.join(', ')}</small></p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {archivedProjects.length > 0 && (
+    <section>
+      <h2>Archived</h2>
+      <ul>
+        {archivedProjects.map((project) => (
+          <li>
+            <h3>{project.data.title}</h3>
+            <p>{project.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {sortedProjects.length === 0 && (
+    <p><em>No projects yet. Check back soon.</em></p>
+  )}
+</BaseLayout>

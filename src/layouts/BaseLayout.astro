@@ -1,0 +1,43 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Jimmy P. Le — NLP engineer and PhD researcher in biomedical question answering." } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Jimmy P. Le</a>
+        <span> · </span>
+        <a href="/projects">Projects</a>
+        <span> · </span>
+        <a href="/publications">Research</a>
+        <span> · </span>
+        <a href="/about">About</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <p>
+        <a href="https://github.com/jimmyphuocle">GitHub</a> ·
+        <a href="https://scholar.google.com">Google Scholar</a> ·
+        <a href="mailto:lej3@vcu.edu">Email</a>
+      </p>
+    </footer>
+  </body>
+</html>

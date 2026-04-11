@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const allPublications = await getCollection('publications');
+
+// Sort by date, newest first
+const sortedPublications = allPublications.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+// Group by year
+const publicationsByYear = sortedPublications.reduce((acc, pub) => {
+  const year = pub.data.year;
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(pub);
+  return acc;
+}, {} as Record<number, typeof sortedPublications>);
+
+// Get years in descending order
+const years = Object.keys(publicationsByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+
+// Helper to format status badges
+function statusLabel(status: string): string | null {
+  if (status === 'in_preparation') return 'In preparation';
+  if (status === 'under_review') return 'Under review';
+  if (status === 'accepted') return 'Accepted';
+  return null;
+}
+---
+
+<BaseLayout title="Research — Jimmy P. Le">
+  <section>
+    <h1>Research</h1>
+    <p>
+      My research focuses on explainable retrieval-augmented generation
+      for biomedical question answering, with particular interest in
+      knowledge graphs, Literature-Based Discovery, and the failure modes
+      of context retrieval in large language models. I am a PhD student
+      at Virginia Commonwealth University advised by Dr. Bridget McInnes.
+    </p>
+  </section>
+
+  {sortedPublications.length === 0 && (
+    <p><em>No publications listed yet.</em></p>
+  )}
+
+  {years.map((year) => (
+    <section>
+      <h2>{year}</h2>
+      <ul>
+        {publicationsByYear[year].map((pub) => {
+          const label = statusLabel(pub.data.status);
+          return (
+            <li>
+              <h3>{pub.data.title}</h3>
+              <p>{pub.data.authors.join(', ')}</p>
+              <p>
+                <em>
+                  {pub.data.venue_short ?? pub.data.venue}
+                  {label && ` · ${label}`}
+                </em>
+              </p>
+              {pub.data.abstract && (
+                <details>
+                  <summary>Abstract</summary>
+                  <p>{pub.data.abstract}</p>
+                </details>
+              )}
+              {(pub.data.pdf || pub.data.arxiv || pub.data.code) && (
+                <p>
+                  {pub.data.pdf && <a href={pub.data.pdf}>PDF</a>}
+                  {pub.data.pdf && pub.data.arxiv && ' · '}
+                  {pub.data.arxiv && (
+                    <a href={`https://arxiv.org/abs/${pub.data.arxiv}`}>arXiv</a>
+                  )}
+                  {(pub.data.pdf || pub.data.arxiv) && pub.data.code && ' · '}
+                  {pub.data.code && <a href={pub.data.code}>Code</a>}
+                </p>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+</BaseLayout>
