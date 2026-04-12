@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'zod';
 import { glob } from 'astro/loaders';
 
 // ---------- Projects ----------
@@ -14,9 +15,9 @@ const projects = defineCollection({
       tags: z.array(z.string()).optional(),
       tech: z.array(z.string()).optional(),
       collaborators: z.array(z.string()).optional(),
-      github: z.string().url().optional(),
-      demo: z.string().url().optional(),
-      paper: z.string().url().optional(),
+      github: z.url().optional(),
+      demo: z.url().optional(),
+      paper: z.url().optional(),
       cover: image().optional(),
     }),
 });
@@ -45,10 +46,10 @@ const publications = defineCollection({
       'in_preparation',
     ]),
     abstract: z.string(),
-    pdf: z.string().url().optional(),
+    pdf: z.url().optional(),
     arxiv: z.string().optional(),
     doi: z.string().optional(),
-    code: z.string().url().optional(),
+    code: z.url().optional(),
     bibtex: z.string().optional(),
     featured: z.boolean().default(false),
     tags: z.array(z.string()).optional(),
