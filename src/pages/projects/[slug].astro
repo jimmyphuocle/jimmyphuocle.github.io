@@ -1,0 +1,50 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({
+    params: { slug: entry.id.replace(/\.md$/, '') },
+    props: { entry },
+  }));
+}
+
+type Props = {
+  entry: CollectionEntry<'projects'>;
+};
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={`${entry.data.title} — Jimmy P. Le`}>
+  <article>
+    <header>
+      <p><a href="/projects">← All projects</a></p>
+      <h1>{entry.data.title}</h1>
+      <p><em>Status: {entry.data.status}</em></p>
+      <p>{entry.data.description}</p>
+
+      {entry.data.tech && (
+        <p><strong>Tech:</strong> {entry.data.tech.join(', ')}</p>
+      )}
+
+      {entry.data.collaborators && (
+        <p><strong>Collaborators:</strong> {entry.data.collaborators.join(', ')}</p>
+      )}
+
+      {(entry.data.github || entry.data.demo || entry.data.paper) && (
+        <p>
+          {entry.data.github && <a href={entry.data.github}>GitHub</a>}
+          {entry.data.github && entry.data.demo && ' · '}
+          {entry.data.demo && <a href={entry.data.demo}>Demo</a>}
+          {(entry.data.github || entry.data.demo) && entry.data.paper && ' · '}
+          {entry.data.paper && <a href={entry.data.paper}>Paper</a>}
+        </p>
+      )}
+    </header>
+
+    <Content />
+  </article>
+</BaseLayout>
