@@ -1,0 +1,71 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const publications = await getCollection('publications');
+  return publications.map((entry) => ({
+    params: { slug: entry.id.replace(/\.md$/, '') },
+    props: { entry },
+  }));
+}
+
+type Props = {
+  entry: CollectionEntry<'publications'>;
+};
+
+const { entry } = Astro.props;
+
+function statusLabel(status: string): string | null {
+  if (status === 'in_preparation') return 'In preparation';
+  if (status === 'under_review') return 'Under review';
+  if (status === 'accepted') return 'Accepted';
+  return null;
+}
+
+const label = statusLabel(entry.data.status);
+---
+
+<BaseLayout title={`${entry.data.title} — Jimmy P. Le`}>
+  <article>
+    <header>
+      <p><a href="/publications">← All publications</a></p>
+      <h1>{entry.data.title}</h1>
+      <p>{entry.data.authors.join(', ')}</p>
+      <p>
+        <em>
+          {entry.data.venue} · {entry.data.year}
+          {label && ` · ${label}`}
+        </em>
+      </p>
+
+      {(entry.data.pdf || entry.data.arxiv || entry.data.code || entry.data.doi) && (
+        <p>
+          {entry.data.pdf && <a href={entry.data.pdf}>PDF</a>}
+          {entry.data.pdf && entry.data.arxiv && ' · '}
+          {entry.data.arxiv && (
+            <a href={`https://arxiv.org/abs/${entry.data.arxiv}`}>arXiv</a>
+          )}
+          {(entry.data.pdf || entry.data.arxiv) && entry.data.code && ' · '}
+          {entry.data.code && <a href={entry.data.code}>Code</a>}
+          {(entry.data.pdf || entry.data.arxiv || entry.data.code) && entry.data.doi && ' · '}
+          {entry.data.doi && (
+            <a href={`https://doi.org/${entry.data.doi}`}>DOI</a>
+          )}
+        </p>
+      )}
+    </header>
+
+    <section>
+      <h2>Abstract</h2>
+      <p>{entry.data.abstract}</p>
+    </section>
+
+    {entry.data.bibtex && (
+      <section>
+        <h2>BibTeX</h2>
+        <pre><code>{entry.data.bibtex}</code></pre>
+      </section>
+    )}
+  </article>
+</BaseLayout>
