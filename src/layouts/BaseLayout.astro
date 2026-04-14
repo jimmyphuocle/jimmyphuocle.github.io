@@ -1,4 +1,5 @@
----
+--- 
+import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
@@ -16,28 +17,31 @@ const { title, description = "Jimmy P. Le — NLP engineer and PhD researcher in
     <title>{title}</title>
   </head>
   <body>
-    <header>
-      <nav>
-        <a href="/">Jimmy P. Le</a>
-        <span> · </span>
-        <a href="/projects">Projects</a>
-        <span> · </span>
-        <a href="/publications">Research</a>
-        <span> · </span>
-        <a href="/about">About</a>
-      </nav>
-    </header>
+    <div class="site">
+      <header class="site-header">
+        <nav class="site-nav">
+          <a href="/" class="site-brand">Jimmy P. Le</a>
+          <div class="site-nav-links">
+            <a href="/projects">Projects</a>
+            <a href="/publications">Research</a>
+            <a href="/about">About</a>
+          </div>
+        </nav>
+      </header>
 
-    <main>
-      <slot />
-    </main>
+      <main class="site-main">
+        <slot />
+      </main>
 
-    <footer>
-      <p>
-        <a href="https://github.com/jimmyphuocle">GitHub</a> ·
-        <a href="https://scholar.google.com">Google Scholar</a> ·
-        <a href="mailto:lejp3@vcu.edu">Email</a>
-      </p>
-    </footer>
+      <footer class="site-footer">
+        <p>
+          <a href="https://github.com/jimmyphuocle">GitHub</a>
+          <span class="sep">.</span>
+          <a href="https://scholar.google.com">Google Scholar</a>
+          <span class="sep">·</span>
+          <a href="mailto:lejp3@vcu.edu">Email</a>
+        </p>
+      </footer>
+    </div>
   </body>
 </html>

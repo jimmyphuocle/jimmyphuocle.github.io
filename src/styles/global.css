@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (Tailwind v4 @theme directive) ----------
+   In Tailwind v4, tokens registered here become first-class utilities.
+   e.g. --color-accent becomes `bg-accent`, `text-accent`, `border-accent`.
+   This replaces the tailwind.config.js `theme.extend` pattern from v3.
+   ------------------------------------------------------------------ */
+@theme {
+  /* Forest-green dark palette — dark is the baseline, not an override */
+  --color-bg:           #0e1411;  /* page background, near-black w/ green undertone */
+  --color-surface:      #1a221c;  /* elevated cards, sidebars */
+  --color-surface-2:    #222a25;  /* hover / secondary elevation */
+  --color-fg:           #e8ece9;  /* primary text, warm off-white */
+  --color-fg-muted:     #8a968f;  /* secondary text, metadata */
+  --color-fg-subtle:    #5e6b64;  /* tertiary, timestamps, captions */
+  --color-border:       #222a25;  /* hairlines, card edges */
+  --color-accent:       #4a7c59;  /* forest green, muted */
+  --color-accent-hover: #5a8f69;  /* lighter on hover */
+
+  /* Font stacks — system-first for tonight; we can swap to self-hosted
+     Inter / Source Serif in the Evening 3 polish pass */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system,
+               "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Monaco,
+               "Cascadia Mono", Consolas, monospace;
+}
+
+/* ---------- Base layer: unopinionated global resets ---------- */
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100vh;
+    line-height: 1.65;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-fg);
+    line-height: 1.25;
+  }
+
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; margin-top: 2rem; }
+  h3 { font-size: 1.25rem; margin-top: 1.5rem; }
+
+  p { margin-block: 0.75rem; }
+
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    margin-block: 2rem;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background-color: var(--color-surface);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+  }
+}
+
+/* ---------- Layout shell ----------
+   Single-column container for Evening 1.
+   Evening 2 will convert .site into a three-column grid. */
+@layer components {
+  .site {
+    max-width: 48rem;          /* ~768px, comfortable reading measure */
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    padding-block: 3rem;
+  }
+
+  .site-header {
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .site-brand {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--color-fg);       /* brand is NOT accent-colored */
+  }
+  .site-brand:hover {
+    color: var(--color-accent);
+  }
+
+  .site-nav-links {
+    display: flex;
+    gap: 1.25rem;
+  }
+  .site-nav-links a {
+    color: var(--color-fg-muted); /* muted by default, accent on hover */
+    font-size: 0.95rem;
+  }
+  .site-nav-links a:hover {
+    color: var(--color-accent);
+  }
+
+  .site-main {
+    /* main content — styling of cards/lists happens in Evening 3 */
+  }
+
+  .site-footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-fg-muted);
+    font-size: 0.9rem;
+  }
+  .site-footer .sep {
+    color: var(--color-fg-subtle);
+    margin-inline: 0.4rem;
+  }
+}
