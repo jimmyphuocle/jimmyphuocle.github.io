@@ -13,8 +13,19 @@ const featuredPublications = allPublications
   .filter((p) => p.data.featured)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
-
 <BaseLayout title="Jimmy P. Le">
+  <aside slot="aside" class="currently">
+    <h2 class="currently-label">Currently</h2>
+    <ul class="currently-list">
+      <li>
+        Writing up <strong>LBD-GraphRAG</strong> — a knowledge-graph
+        retrieval system for explainable biomedical question answering.
+        First dissertation paper, <a href="https://nlp.cs.vcu.edu">VCU NLP Lab</a>.
+      </li>
+    </ul>
+    <p class="currently-updated">Updated April 2026</p>
+  </aside>
+
   <section>
     <h1>Jimmy P. Le</h1>
     <p>

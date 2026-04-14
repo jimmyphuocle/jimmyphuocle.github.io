@@ -1,15 +1,17 @@
 --- 
 import '../styles/global.css';
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.jpg';
+
 interface Props {
   title: string;
   description?: string;
 }
-
 const { title, description = "Jimmy P. Le — NLP engineer and PhD researcher in biomedical question answering." } = Astro.props;
 ---
 
 <html lang="en">
-  <head>
+ <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
@@ -29,14 +31,45 @@ const { title, description = "Jimmy P. Le — NLP engineer and PhD researcher in
         </nav>
       </header>
 
+      <aside class="site-identity">
+        <Image
+          src={portrait}
+          alt="Jimmy P. Le"
+          class="identity-portrait"
+          width={384}
+          height={384}
+        />
+        <h2 class="identity-name">Jimmy P. Le</h2>
+        <p class="identity-title">PhD Student, Computer Science</p>
+        <p class="identity-affiliation">
+          <a href="https://nlp.cs.vcu.edu">NLP Lab</a><br />
+          Virginia Commonwealth University
+        </p>
+        <p class="identity-advisor">
+          Advised by<br />
+          Dr. Bridget T. McInnes
+        </p>
+        <p class="identity-location">Richmond, VA USA</p>
+        <ul class="identity-links">
+          <li><a href="https://github.com/jimmyphuocle">GitHub</a></li>
+          <li><a href="https://scholar.google.com">Google Scholar</a></li>
+          <li><a href="https://www.linkedin.com/in/jimmy-le-vcu/">LinkedIn</a></li>
+          <li><a href="mailto:lejp3@vcu.edu">Email</a></li>
+        </ul>
+      </aside>
+
       <main class="site-main">
         <slot />
       </main>
 
+      <aside class="site-aside">
+        <slot name="aside" />
+      </aside>
+
       <footer class="site-footer">
         <p>
           <a href="https://github.com/jimmyphuocle">GitHub</a>
-          <span class="sep">.</span>
+          <span class="sep">·</span>
           <a href="https://scholar.google.com">Google Scholar</a>
           <span class="sep">·</span>
           <a href="mailto:lejp3@vcu.edu">Email</a>

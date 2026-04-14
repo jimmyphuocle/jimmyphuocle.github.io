@@ -85,8 +85,8 @@
 }
 
 /* ---------- Layout shell ----------
-   Single-column container for Evening 1.
-   Evening 2 will convert .site into a three-column grid. */
+   Single-column container
+*/
 @layer components {
   .site {
     max-width: 48rem;          /* ~768px, comfortable reading measure */
@@ -144,5 +144,183 @@
   .site-footer .sep {
     color: var(--color-fg-subtle);
     margin-inline: 0.4rem;
+  }
+}
+
+/* ---------- Three-column grid shell ----------
+   On wide screens: header + footer span full width, middle row is
+   [identity | main | aside]. On narrow screens: single column in
+   source order (header, identity, main, aside, footer). */
+@layer components {
+  .site {
+    /* Override Evening 1's simple centered column */
+    max-width: 72rem;          /* ~1152px — wide enough for three columns */
+    padding-block: 3rem;
+    padding-inline: 2rem;
+    margin-inline: auto;
+
+    display: grid;
+    grid-template-columns: 14rem 1fr 12rem;
+    grid-template-areas:
+      "header   header  header"
+      "identity main    aside"
+      "footer   footer  footer";
+    column-gap: 3rem;
+    row-gap: 2rem;
+  }
+
+  .site-header   { grid-area: header; }
+  .site-identity { grid-area: identity; }
+  .site-main     { grid-area: main; }
+  .site-aside    { grid-area: aside; }
+  .site-footer   { grid-area: footer; }
+
+  
+  @media (max-width: 900px) {
+    .site {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "header"
+        "identity"
+        "main"
+        "aside"
+        "footer";
+      max-width: 42rem;
+      column-gap: 0;
+    }
+
+    /* Constrain the identity block so it reads as a card, not a banner */
+    .site-identity {
+      max-width: 18rem;
+      margin-inline: auto;
+      padding-block: 1rem;
+    }
+
+    /* Same treatment for the aside on mobile — compact card, not full width */
+    .site-aside {
+      max-width: 18rem;
+      margin-inline: auto;
+      padding-block: 1rem;
+    }
+  }
+
+  .site-identity .placeholder,
+  .site-aside:empty::before {
+    display: block;
+    padding: 1rem;
+    border: 1px dashed var(--color-border);
+    border-radius: 4px;
+    color: var(--color-fg-subtle);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .site-aside:empty::before {
+    content: "[aside slot — empty on this page]";
+  }
+
+}
+
+/* ---------- Identity block  ---------- */
+@layer components {
+  .site-identity {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .identity-portrait {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-border);
+    margin: 0 auto 1.25rem;
+    display: block;
+  }
+
+  .identity-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+    color: var(--color-fg);
+  }
+
+  .identity-title {
+    margin: 0 0 0.75rem;
+    color: var(--color-fg-muted);
+    font-size: 0.85rem;
+  }
+
+  .identity-affiliation,
+  .identity-advisor,
+  .identity-location {
+    margin: 0 0 0.75rem;
+    color: var(--color-fg-muted);
+    font-size: 0.85rem;
+  }
+
+  .identity-affiliation a {
+    color: var(--color-fg);
+  }
+  .identity-affiliation a:hover {
+    color: var(--color-accent);
+  }
+
+  .identity-links {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 0;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+  }
+  .identity-links li {
+    margin-bottom: 0.35rem;
+  }
+  .identity-links a {
+    color: var(--color-fg-muted);
+    font-size: 0.85rem;
+  }
+  .identity-links a:hover {
+    color: var(--color-accent);
+  }
+}
+
+
+@layer components {
+  .site-aside {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+  }
+
+  .currently-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-fg-subtle);
+    margin: 0 0 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .currently-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .currently-list li {
+    margin-bottom: 0.75rem;
+  }
+  .currently-list strong {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+
+  .currently-updated {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--color-fg-subtle);
+    font-style: italic;
   }
 }
