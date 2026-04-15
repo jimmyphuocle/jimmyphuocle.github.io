@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  showTech?: boolean;
+  showCollaborators?: boolean;
+  showGithub?: boolean;
+  showDescription?: boolean;
+}
+
+const {
+  project,
+  showTech = false,
+  showCollaborators = false,
+  showGithub = false,
+  showDescription = true,
+} = Astro.props;
+---
+<li>
+  <h3>
+    <a href={`/projects/${project.id}`}>{project.data.title}</a>
+  </h3>
+
+  {showDescription && <p>{project.data.description}</p>}
+
+  {showTech && project.data.tech && (
+    <p><small>Tech: {project.data.tech.join(', ')}</small></p>
+  )}
+
+  {showCollaborators && project.data.collaborators && (
+    <p><small>With: {project.data.collaborators.join(', ')}</small></p>
+  )}
+
+  {showGithub && project.data.github && (
+    <p><a href={project.data.github}>GitHub →</a></p>
+  )}
+</li>

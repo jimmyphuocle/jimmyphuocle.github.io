@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PublicationCard from '../components/PublicationCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 
 const allProjects = await getCollection('projects');
 const allPublications = await getCollection('publications');
@@ -40,16 +41,10 @@ const featuredPublications = allPublications
     {featuredProjects.length === 0 && <p>No featured projects yet.</p>}
     <ul>
       {featuredProjects.map((project) => (
-        <li>
-          <h3>
-            <a href={`/projects/${project.id}`}>{project.data.title}</a>
-          </h3>
-          <p><em>Status: {project.data.status}</em></p>
-          <p>{project.data.description}</p>
-          {project.data.tech && (
-            <p><small>Tech: {project.data.tech.join(', ')}</small></p>
-          )}
-        </li>
+        <ProjectCard
+          project={project}
+          showTech={true}
+        />
       ))}
     </ul>
     <p><a href="/projects">All projects →</a></p>

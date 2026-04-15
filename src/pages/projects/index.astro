@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
 
 const allProjects = await getCollection('projects');
 
@@ -29,21 +30,12 @@ const archivedProjects = sortedProjects.filter((p) => p.data.status === 'archive
       <h2>Active</h2>
       <ul>
         {activeProjects.map((project) => (
-          <li>
-            <h3>
-              <a href={`/projects/${project.id}`}>{project.data.title}</a>
-            </h3>
-            <p>{project.data.description}</p>
-            {project.data.tech && (
-              <p><small>Tech: {project.data.tech.join(', ')}</small></p>
-            )}
-            {project.data.collaborators && (
-              <p><small>With: {project.data.collaborators.join(', ')}</small></p>
-            )}
-            {project.data.github && (
-              <p><a href={project.data.github}>GitHub →</a></p>
-            )}
-          </li>
+          <ProjectCard
+            project={project}
+            showTech={true}
+            showCollaborators={true}
+            showGithub={true}
+          />
         ))}
       </ul>
     </section>
@@ -54,16 +46,11 @@ const archivedProjects = sortedProjects.filter((p) => p.data.status === 'archive
       <h2>Completed</h2>
       <ul>
         {completedProjects.map((project) => (
-          <li>
-            <h3>
-              <a href={`/projects/${project.id}`}>{project.data.title}</a>
-            </h3>
-            <p>{project.data.description}</p>
-            {project.data.tech && (
-              <p><small>Tech: {project.data.tech.join(', ')}</small></p>
-            )}
-          </li>
-        ))}
+          <ProjectCard
+            project={project}
+            showTech={true}
+          />
+       ))}
       </ul>
     </section>
   )}
