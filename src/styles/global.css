@@ -24,6 +24,10 @@
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Monaco,
                "Cascadia Mono", Consolas, monospace;
+  /* Pill backgrounds and tag color */
+  --color-accent-soft:  #2a4a36;  /* muted accent, for filled status pills */
+  --color-tag-fg:       #b8c2bc;  /* tech tag text — between fg and fg-muted */
+  --color-tag-bg:       #1a221c;  /* tech tag bg — same as surface, explicit name for intent */
 }
 
 /* ---------- Base layer: unopinionated global resets ---------- */
@@ -44,14 +48,14 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
     color: var(--color-fg);
-    line-height: 1.25;
+    line-height: 1.2;
   }
 
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.5rem; margin-top: 2rem; }
-  h3 { font-size: 1.25rem; margin-top: 1.5rem; }
+  h1 { font-size: 2.25rem; line-height: 1.15; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.625rem; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+  h3 { font-size: 1.125rem; margin-top: 1.25rem; margin-bottom: 0.25rem; }
 
   p { margin-block: 0.75rem; }
 
