@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PublicationCard from '../components/PublicationCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import StatusPill from '../components/StatusPill.astro';
 
 const allProjects = await getCollection('projects');
 const allPublications = await getCollection('publications');

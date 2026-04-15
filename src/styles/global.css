@@ -328,3 +328,47 @@
     font-style: italic;
   }
 }
+
+/* ---------- Status pills ---------- */
+@layer components {
+  .status-pill {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    line-height: 1.4;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .status-pill--solid {
+    background-color: var(--color-accent-soft);
+    color: var(--color-fg);
+    border: 1px solid var(--color-accent-soft);
+  }
+
+  .status-pill--outlined {
+    background-color: transparent;
+    color: var(--color-fg-muted);
+    border: 1px solid var(--color-border);
+  }
+}
+
+/* ---------- Card meta line (venue · year + status pill) ---------- */
+@layer components {
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    color: var(--color-fg-muted);
+    margin-block: 0.4rem;
+  }
+
+  .card-meta em {
+    font-style: italic;
+  }
+}

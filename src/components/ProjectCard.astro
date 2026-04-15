@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import StatusPill from './StatusPill.astro';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -21,6 +22,10 @@ const {
   <h3>
     <a href={`/projects/${project.id}`}>{project.data.title}</a>
   </h3>
+
+  <p class="card-meta">
+    <StatusPill status={project.data.status} />
+  </p>
 
   {showDescription && <p>{project.data.description}</p>}
 

@@ -1,0 +1,29 @@
+---
+interface Props {
+  status: string;
+}
+
+const { status } = Astro.props;
+
+// Map raw status enum values to display labels and visual variants.
+// `solid` = done states (published, accepted, active, completed)
+// `outlined` = in-flight or stepped-back states (under_review, in_preparation, archived)
+const statusMap: Record<string, { label: string; variant: 'solid' | 'outlined' }> = {
+  // Publication statuses
+  published:      { label: 'Published',      variant: 'solid' },
+  accepted:       { label: 'Accepted',       variant: 'solid' },
+  under_review:   { label: 'Under review',   variant: 'outlined' },
+  in_preparation: { label: 'In preparation', variant: 'outlined' },
+  // Project statuses
+  active:         { label: 'Active',         variant: 'solid' },
+  completed:      { label: 'Completed',      variant: 'solid' },
+  archived:       { label: 'Archived',       variant: 'outlined' },
+};
+
+const entry = statusMap[status];
+---
+{entry && (
+  <span class={`status-pill status-pill--${entry.variant}`}>
+    {entry.label}
+  </span>
+)}

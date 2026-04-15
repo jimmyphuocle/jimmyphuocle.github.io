@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import StatusPill from './StatusPill.astro';
 
 interface Props {
   pub: CollectionEntry<'publications'>;
@@ -9,25 +10,17 @@ interface Props {
 
 const { pub, variant = 'full', showYear = true } = Astro.props;
 
-function statusLabel(status: string): string | null {
-  if (status === 'in_preparation') return 'In preparation';
-  if (status === 'under_review') return 'Under review';
-  if (status === 'accepted') return 'Accepted';
-  return null;
-}
-
-const label = statusLabel(pub.data.status);
 const venue = pub.data.venue_short ?? pub.data.venue;
 ---
 <li>
   <h3>{pub.data.title}</h3>
   <p>{pub.data.authors.join(', ')}</p>
-  <p>
+  <p class="card-meta">
     <em>
       {venue}
       {showYear && ` · ${pub.data.year}`}
-      {label && ` · ${label}`}
     </em>
+    <StatusPill status={pub.data.status} />
   </p>
 
   {variant === 'full' && pub.data.abstract && (
