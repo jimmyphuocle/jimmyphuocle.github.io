@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PublicationCard from '../../components/PublicationCard.astro';
 
 const allPublications = await getCollection('publications');
 
@@ -22,13 +23,6 @@ const years = Object.keys(publicationsByYear)
   .map(Number)
   .sort((a, b) => b - a);
 
-// Helper to format status badges
-function statusLabel(status: string): string | null {
-  if (status === 'in_preparation') return 'In preparation';
-  if (status === 'under_review') return 'Under review';
-  if (status === 'accepted') return 'Accepted';
-  return null;
-}
 ---
 
 <BaseLayout title="Research — Jimmy P. Le">
@@ -51,38 +45,9 @@ function statusLabel(status: string): string | null {
     <section>
       <h2>{year}</h2>
       <ul>
-        {publicationsByYear[year].map((pub) => {
-          const label = statusLabel(pub.data.status);
-          return (
-            <li>
-              <h3>{pub.data.title}</h3>
-              <p>{pub.data.authors.join(', ')}</p>
-              <p>
-                <em>
-                  {pub.data.venue_short ?? pub.data.venue}
-                  {label && ` · ${label}`}
-                </em>
-              </p>
-              {pub.data.abstract && (
-                <details>
-                  <summary>Abstract</summary>
-                  <p>{pub.data.abstract}</p>
-                </details>
-              )}
-              {(pub.data.pdf || pub.data.arxiv || pub.data.code) && (
-                <p>
-                  {pub.data.pdf && <a href={pub.data.pdf}>PDF</a>}
-                  {pub.data.pdf && pub.data.arxiv && ' · '}
-                  {pub.data.arxiv && (
-                    <a href={`https://arxiv.org/abs/${pub.data.arxiv}`}>arXiv</a>
-                  )}
-                  {(pub.data.pdf || pub.data.arxiv) && pub.data.code && ' · '}
-                  {pub.data.code && <a href={pub.data.code}>Code</a>}
-                </p>
-              )}
-            </li>
-          );
-        })}
+        {publicationsByYear[year].map((pub) => (
+          <PublicationCard pub={pub} variant="full" showYear={false} />
+        ))}
       </ul>
     </section>
   ))}

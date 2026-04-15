@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PublicationCard from '../components/PublicationCard.astro';
 
 const allProjects = await getCollection('projects');
 const allPublications = await getCollection('publications');
@@ -61,17 +62,7 @@ const featuredPublications = allPublications
     )}
     <ul>
       {featuredPublications.map((pub) => (
-        <li>
-          <h3>{pub.data.title}</h3>
-          <p>{pub.data.authors.join(', ')}</p>
-          <p>
-            <em>
-              {pub.data.venue_short ?? pub.data.venue} · {pub.data.year}
-              {pub.data.status === 'in_preparation' && ' · In preparation'}
-              {pub.data.status === 'under_review' && ' · Under review'}
-            </em>
-          </p>
-        </li>
+        <PublicationCard pub={pub} variant="compact" showYear={true} />
       ))}
     </ul>
     <p><a href="/publications">All publications →</a></p>

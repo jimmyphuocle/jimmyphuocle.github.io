@@ -1,0 +1,51 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  pub: CollectionEntry<'publications'>;
+  variant?: 'compact' | 'full';
+  showYear?: boolean;
+}
+
+const { pub, variant = 'full', showYear = true } = Astro.props;
+
+function statusLabel(status: string): string | null {
+  if (status === 'in_preparation') return 'In preparation';
+  if (status === 'under_review') return 'Under review';
+  if (status === 'accepted') return 'Accepted';
+  return null;
+}
+
+const label = statusLabel(pub.data.status);
+const venue = pub.data.venue_short ?? pub.data.venue;
+---
+<li>
+  <h3>{pub.data.title}</h3>
+  <p>{pub.data.authors.join(', ')}</p>
+  <p>
+    <em>
+      {venue}
+      {showYear && ` · ${pub.data.year}`}
+      {label && ` · ${label}`}
+    </em>
+  </p>
+
+  {variant === 'full' && pub.data.abstract && (
+    <details>
+      <summary>Abstract</summary>
+      <p>{pub.data.abstract}</p>
+    </details>
+  )}
+
+  {variant === 'full' && (pub.data.pdf || pub.data.arxiv || pub.data.code) && (
+    <p>
+      {pub.data.pdf && <a href={pub.data.pdf}>PDF</a>}
+      {pub.data.pdf && pub.data.arxiv && ' · '}
+      {pub.data.arxiv && (
+        <a href={`https://arxiv.org/abs/${pub.data.arxiv}`}>arXiv</a>
+      )}
+      {(pub.data.pdf || pub.data.arxiv) && pub.data.code && ' · '}
+      {pub.data.code && <a href={pub.data.code}>Code</a>}
+    </p>
+  )}
+</li>
