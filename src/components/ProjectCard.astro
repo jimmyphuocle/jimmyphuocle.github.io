@@ -30,7 +30,10 @@ const {
   {showDescription && <p>{project.data.description}</p>}
 
   {showTech && project.data.tech && (
-    <p><small>Tech: {project.data.tech.join(', ')}</small></p>
+    <p class="card-tech">
+      <span class="card-tech-label">Tech</span>
+      <span class="card-tech-list">{project.data.tech.join(', ')}</span>
+    </p>
   )}
 
   {showCollaborators && project.data.collaborators && (

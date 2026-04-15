@@ -372,3 +372,31 @@
     font-style: italic;
   }
 }
+
+/* ---------- Tech tag list (monospace treatment) ---------- */
+@layer components {
+  .card-tech {
+    margin-block: 0.5rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    font-size: 0.825rem;
+    line-height: 1.5;
+  }
+
+  .card-tech-label {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.7rem;
+    color: var(--color-fg-subtle);
+  }
+
+  .card-tech-list {
+    font-family: var(--font-mono);
+    color: var(--color-tag-fg);
+    font-size: 0.8rem;
+  }
+}
