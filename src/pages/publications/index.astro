@@ -26,6 +26,14 @@ const years = Object.keys(publicationsByYear)
 ---
 
 <BaseLayout title="Research — Jimmy P. Le">
+  <div slot="aside" class="aside-block">
+    <h2 class="aside-label">Years</h2>
+    <ul class="aside-list aside-yearlist">
+      {years.map((year) => (
+        <li><a href={'#year-${year}'}>{year}</a></li>
+      ))}
+    </ul>
+  </div>
   <section>
     <h1>Research</h1>
     <p>
@@ -42,7 +50,7 @@ const years = Object.keys(publicationsByYear)
   )}
 
   {years.map((year) => (
-    <section>
+    <section id={'year-${year}'}>
       <h2>{year}</h2>
       <ul>
         {publicationsByYear[year].map((pub) => (

@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import StatusPill from '../../components/StatusPill.astro';
 
 const allProjects = await getCollection('projects');
 
@@ -17,6 +18,24 @@ const archivedProjects = sortedProjects.filter((p) => p.data.status === 'archive
 ---
 
 <BaseLayout title="Projects — Jimmy P. Le">
+  <div slot="aside" class="aside-block">
+    <h2 class="aside-label">Status</h2>
+    <ul class="aside-legend">
+      <li>
+        <StatusPill status="active" />
+        <a href="#active">Active</a>
+      </li>
+      <li>
+        <StatusPill status="completed" />
+        <a href="#completed">Completed</a>
+      </li>
+      <li>
+        <StatusPill status="archived" />
+        <a href="#archived">Archived</a>
+      </li>
+    </ul>
+  </div>
+
   <section>
     <h1>Projects</h1>
     <p>
@@ -26,7 +45,7 @@ const archivedProjects = sortedProjects.filter((p) => p.data.status === 'archive
   </section>
 
   {activeProjects.length > 0 && (
-    <section>
+    <section id="active">
       <h2>Active</h2>
       <ul>
         {activeProjects.map((project) => (
@@ -42,7 +61,7 @@ const archivedProjects = sortedProjects.filter((p) => p.data.status === 'archive
   )}
 
   {completedProjects.length > 0 && (
-    <section>
+    <section id="completed">
       <h2>Completed</h2>
       <ul>
         {completedProjects.map((project) => (
@@ -56,7 +75,7 @@ const archivedProjects = sortedProjects.filter((p) => p.data.status === 'archive
   )}
 
   {archivedProjects.length > 0 && (
-    <section>
+    <section id="archived">
       <h2>Archived</h2>
       <ul>
         {archivedProjects.map((project) => (
