@@ -498,3 +498,55 @@
     margin-bottom: 0.1rem;
   }
 }
+
+/* ---------- Spec table (publication detail pages) ----------
+   Apple-inspired label/value grid with hairline dividers. Used for
+   structured metadata where each row is (label, value). Labels use
+   the same uppercase-letterspaced treatment as other micro-labels
+   on the site. */
+@layer components {
+  .spec-table {
+    margin: 1.5rem 0 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .spec-row {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .spec-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-fg-subtle);
+    padding-top: 0.15rem;    /* nudge down to baseline-align with value's first line */
+  }
+
+  .spec-value {
+    color: var(--color-fg);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .spec-value a {
+    /* Links in spec-value inherit the standard accent treatment; no override */
+  }
+
+  /* Narrow screens: stack label on top of value */
+  @media (max-width: 600px) {
+    .spec-row {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+      padding-block: 0.85rem;
+    }
+    .spec-label {
+      padding-top: 0;
+    }
+  }
+}

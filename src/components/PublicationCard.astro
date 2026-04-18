@@ -13,7 +13,9 @@ const { pub, variant = 'full', showYear = true } = Astro.props;
 const venue = pub.data.venue_short ?? pub.data.venue;
 ---
 <li>
-  <h3>{pub.data.title}</h3>
+  <h3>
+    <a href={`/publications/${pub.id}`}>{pub.data.title}</a>
+  </h3>
   <p>{pub.data.authors.join(', ')}</p>
   <p class="card-meta">
     <em>
