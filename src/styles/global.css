@@ -21,7 +21,8 @@
      Inter / Source Serif in the Evening 3 polish pass */
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system,
                "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-serif: "Source Serif 4", ui-serif, Georgia, Cambria,
+                "Times New Roman", Times, serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Monaco,
                "Cascadia Mono", Consolas, monospace;
   /* Pill backgrounds and tag color */
@@ -619,3 +620,66 @@
     font-weight: 500;
   }
 }
+
+/* ---------- Self-hosted fonts ----------
+   Inter 4.x (rsms/inter) + Source Serif 4.327 (adobe-fonts/source-serif).
+   Files live in /public/fonts/ and are served from the site root.
+   font-display: swap = render immediately in fallback, swap to real
+   font on load (FOUT over FOIT — readable always beats stylish eventually). */
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/fonts/SourceSerif4-Regular.otf.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/fonts/SourceSerif4-It.otf.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/fonts/SourceSerif4-Semibold.otf.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
