@@ -550,3 +550,72 @@
     }
   }
 }
+
+/* ---------- Light mode token overrides ----------
+   Dark is the baseline (declared in @theme above). This block
+   overrides color tokens when <html> has the .light class.
+   Non-color tokens (fonts, spacing) inherit from @theme; they
+   don't change between themes.
+
+   Note: @theme tokens can't be overridden by a second @theme
+   block, so we override them at :root.light instead. This works
+   because Tailwind v4 renders @theme tokens into CSS custom
+   properties on :root at build time; redeclaring them at
+   :root.light just shadows those values when the class matches. */
+:root.light {
+  --color-bg:           #f4efe8;  /* warm cream, not pure white */
+  --color-surface:      #ebe5dc;  /* cards elevate *down* in light mode */
+  --color-surface-2:    #e0dace;  /* hover / secondary elevation */
+  --color-fg:           #1a1f1c;  /* near-black with green undertone */
+  --color-fg-muted:     #5e6b64;  /* secondary text */
+  --color-fg-subtle:    #8a968f;  /* tertiary, captions */
+  --color-border:       #d4cec0;  /* warm hairline, tuned to cream */
+  --color-accent:       #3d6b4c;  /* darker forest-green for light bg contrast */
+  --color-accent-hover: #2e5a3d;  /* darkens on hover (opposite direction from dark) */
+  --color-accent-soft:  #c8d6cb;  /* light forest-green tint for pills */
+  --color-tag-fg:       #3a4540;  /* tag text, readable on cream */
+  --color-tag-bg:       #ebe5dc;  /* matches surface */
+}
+
+/* ---------- Theme toggle button ----------
+   Lives at the bottom of the identity card. Matches the muted
+   link-list aesthetic by default, accent on hover. Two icon spans
+   are both in the DOM; CSS toggles which is visible based on the
+   .light class on <html>. */
+@layer components {
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1.25rem auto 0;
+    padding: 0.4rem 0.85rem;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-fg-muted);
+    font-family: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: color 150ms ease, border-color 150ms ease;
+  }
+
+  .theme-toggle:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  .theme-toggle-icon {
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+
+  /* Show moon in dark mode (clicking goes to light) */
+  /* Show sun in light mode (clicking goes to dark) */
+  :root:not(.light) .theme-toggle-icon--light { display: none; }
+  :root.light       .theme-toggle-icon--dark  { display: none; }
+
+  .theme-toggle-label {
+    font-weight: 500;
+  }
+}

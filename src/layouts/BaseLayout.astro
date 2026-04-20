@@ -12,11 +12,26 @@ const { title, description = "Jimmy P. Le — Building NLP systems for explainab
 
 <html lang="en">
   <head>
+    <script is:inline>
+      (function () {
+        try {
+          const stored = localStorage.getItem('theme');
+          const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+          const theme = stored ?? (prefersLight ? 'light' : 'dark');
+          if (theme == 'light') {
+            document.documentElement.classList.add('light');
+          }
+        } catch (e) {
+          /* localStorage blocked (private browsing) - fall back to dark default */ 
+        }
+      })();
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0e1411" />
+    <meta name="theme-color" content="#0e1411" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f4efe8" media="(prefers-color-scheme: light)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={`https://jimmyphuocle.com${Astro.url.pathname}`} />
 
@@ -75,6 +90,16 @@ const { title, description = "Jimmy P. Le — Building NLP systems for explainab
           <li><a href="https://www.linkedin.com/in/jimmy-le-vcu/">LinkedIn</a></li>
           <li><a href="mailto:lejp3@vcu.edu">Email</a></li>
         </ul>
+        <button
+          id="theme-toggle"
+          type="button"
+          class:list="theme-toggle"
+          aria-label="Toggle color theme"
+        >
+          <span class="theme-toggle-icon theme-toggle-icon--dark" aria-hidden="true">☾</span>
+          <span class="theme-toggle-icon theme-toggle-icon--light" aria-hidden="true">☀</span>
+          <span class="theme-toggle-label">Theme</span>
+        </button>
       </aside>
 
       <main class="site-main">
@@ -95,5 +120,20 @@ const { title, description = "Jimmy P. Le — Building NLP systems for explainab
         </p>
       </footer>
     </div>
+    <script is:inline>
+      (function () {
+        const button = document.getElementById('theme-toggle');
+        if (!button) return;
+        button.addEventListener('click', () => {
+          const root = document.documentElement;
+          const isLight = root.classList.toggle('light');
+          try {
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+          } catch (e) {
+            /* localStorage blocked; in-session toggle still works */
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
