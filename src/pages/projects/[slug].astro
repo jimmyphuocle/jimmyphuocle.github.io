@@ -27,6 +27,7 @@ const startedLabel = entry.data.date
     }).format(entry.data.date)
   : null;
 
+const dateLabel = entry.data.status === 'completed' ? 'Completed' : 'Started';
 // Build the links row from whichever optional URLs exist on this entry
 type DetailLink = { href: string; label: string };
 const links: DetailLink[] = [];
@@ -50,7 +51,7 @@ if (entry.data.paper)  links.push({ href: entry.data.paper,  label: 'Paper' });
 
       {startedLabel && (
         <p class="card-tech">
-          <span class="card-tech-label">Started</span>
+        <span class="card-tech-label">{dateLabel}</span>
           <span>{startedLabel}</span>
         </p>
       )}
