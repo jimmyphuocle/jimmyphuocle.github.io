@@ -62,19 +62,20 @@ if (entry.data.code)  links.push({ href: entry.data.code, label: 'Code' });
         </div>
       )}
     </dl>
+    <div class="prose">
+      {entry.data.abstract && (
+        <section>
+          <h2>Abstract</h2>
+          <p>{entry.data.abstract}</p>
+        </section>
+      )}
+      {entry.data.bibtex && (
+        <section>
+          <h2>BibTeX</h2>
+          <pre><code>{entry.data.bibtex}</code></pre>
+        </section>
+      )}
+    </div>
 
-    {entry.data.abstract && (
-      <section>
-        <h2>Abstract</h2>
-        <p>{entry.data.abstract}</p>
-      </section>
-    )}
-
-    {entry.data.bibtex && (
-      <section>
-        <h2>BibTeX</h2>
-        <pre><code>{entry.data.bibtex}</code></pre>
-      </section>
-    )}
   </article>
 </BaseLayout>
