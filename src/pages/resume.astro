@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const RESUME_PATH = '/jimmy-p-le-resume.pdf';
+const LAST_UPDATED = 'April 2026';
+---
+<BaseLayout
+  title="Resume — Jimmy P. Le"
+  description="Resume of Jimmy P. Le — PhD researcher and engineer working on biomedical NLP, GraphRAG, and retrieval-augmented generation."
+>
+  <div slot="aside">
+    <div class="aside-block">
+      <h2 class="aside-label">Last updated</h2>
+      <p>{LAST_UPDATED}</p>
+    </div>
+
+    <div class="aside-block">
+      <h2 class="aside-label">Looking for</h2>
+      <p>
+        Software, ML, and NLP engineering roles.
+        DC / Northern Virginia preferred; remote considered.
+      </p>
+    </div>
+
+    <div class="aside-block">
+      <h2 class="aside-label">Direct contact</h2>
+      <ul class="aside-contact-list">
+        <li>
+          <span class="contact-method">Email</span>
+          <a href="mailto:lejp3@vcu.edu">lejp3@vcu.edu</a>
+        </li>
+        <li>
+          <span class="contact-method">LinkedIn</span>
+          <a href="https://www.linkedin.com/in/jimmy-le-vcu/">jimmy-le-vcu</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="resume-page">
+    <header class="resume-header">
+      <h1>Resume</h1>
+      <p class="resume-intro">
+        A one-page overview of my research, engineering experience, and
+        education. For the full project case studies, see
+        <a href="/projects/">Projects</a>; for publications, see
+        <a href="/publications/">Research</a>.
+      </p>
+
+      <div class="resume-actions">
+        
+        <a class="btn btn-primary"
+          href={RESUME_PATH}
+          download="jimmy-p-le-resume.pdf"
+        >
+          Download PDF
+        </a>
+        
+        <a class="btn btn-secondary"
+          href={RESUME_PATH}
+          target="_blank"
+          rel="noopener"
+        >
+          Open in new tab
+        </a>
+      </div>
+    </header>
+
+    <div class="resume-embed-wrap">
+      <object
+        data={RESUME_PATH}
+        type="application/pdf"
+        class="resume-embed"
+        aria-label="Embedded resume PDF"
+      >
+        <div class="resume-embed-fallback">
+          <p>
+            Your browser can't display inline PDFs (this is common on mobile).
+          </p>
+          <p>
+            <a href={RESUME_PATH} target="_blank" rel="noopener">
+              Open the resume in a new tab
+            </a>
+            or
+            <a href={RESUME_PATH} download="jimmy-p-le-resume.pdf">
+              download the PDF
+            </a>.
+          </p>
+        </div>
+      </object>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .resume-page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .resume-header h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  .resume-intro {
+    color: var(--color-text-muted);
+    max-width: 60ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .resume-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border: 1px solid var(--color-accent);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-hover, var(--color-accent));
+    filter: brightness(1.08);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .resume-embed-wrap {
+    width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--color-surface, var(--color-bg));
+  }
+
+  .resume-embed {
+    display: block;
+    width: 100%;
+    height: min(1100px, calc(100vh - 8rem));
+    border: 0;
+  }
+
+  .resume-embed-fallback {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .resume-embed-fallback p {
+    margin: 0.5rem 0;
+  }
+
+  @media (max-width: 640px) {
+    .resume-embed {
+      height: 70vh;
+    }
+  }
+</style>
+
