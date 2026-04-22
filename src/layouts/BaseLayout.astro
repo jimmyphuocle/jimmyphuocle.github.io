@@ -61,6 +61,15 @@ const { title, description = "Jimmy P. Le — Building NLP systems for explainab
             <a href="/projects">Projects</a>
             <a href="/publications">Research</a>
             <a href="/about">About</a>
+            <button
+              id="theme-toggle"
+              type="button"
+              class:list="theme-toggle"
+              aria-label="Toggle color theme"
+            >
+              <span class="theme-toggle-icon theme-toggle-icon--dark" aria-hidden="true">☾</span>
+              <span class="theme-toggle-icon theme-toggle-icon--light" aria-hidden="true">☀</span>
+            </button>
           </div>
         </nav>
       </header>
@@ -90,16 +99,6 @@ const { title, description = "Jimmy P. Le — Building NLP systems for explainab
           <li><a href="https://www.linkedin.com/in/jimmy-le-vcu/">LinkedIn</a></li>
           <li><a href="mailto:lejp3@vcu.edu">Email</a></li>
         </ul>
-        <button
-          id="theme-toggle"
-          type="button"
-          class:list="theme-toggle"
-          aria-label="Toggle color theme"
-        >
-          <span class="theme-toggle-icon theme-toggle-icon--dark" aria-hidden="true">☾</span>
-          <span class="theme-toggle-icon theme-toggle-icon--light" aria-hidden="true">☀</span>
-          <span class="theme-toggle-label">Theme</span>
-        </button>
       </aside>
 
       <main class="site-main">
