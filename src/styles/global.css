@@ -560,8 +560,8 @@
    so this block wins cleanly without having to match the plugin's
    layer or bump specificity with hacks like .prose.prose. */
 .prose {
-  /* Serif body — the reason we added the plugin */
-  font-family: var(--font-serif);
+  /* Sans body — the reason we added the plugin */
+  font-family: var(--font-sans);
 
   /* Map plugin's CSS variables to our design tokens. Because this block
      is unlayered, our overrides beat the plugin's in-layer defaults. */
