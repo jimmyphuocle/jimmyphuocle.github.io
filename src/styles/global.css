@@ -598,6 +598,18 @@
   font-weight: 400;
 }
 
+/* ---------- Muted body + emphasis (Apple-style contrast pattern) ----------
+   Opt-in pattern for paragraphs where you want reader attention
+   drawn to specific phrases. Apply .muted-body to a paragraph,
+   then wrap emphasized phrases in <span class="emphasis">.
+   The effect is produced by color contrast, not font-weight. */
+.muted-body {
+  color: var(--color-fg-muted);
+}
+.emphasis {
+  color: var(--color-fg);
+}
+
 /* ---------- Light mode token overrides ----------
    Dark is the baseline (declared in @theme above). This block
    overrides color tokens when <html> has the .light class.
