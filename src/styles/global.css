@@ -162,34 +162,34 @@
   }
 }
 
-/* ---------- Three-column grid shell ----------
+/* ---------- Two-column grid shell ----------
    On wide screens: header + footer span full width, middle row is
-   [identity | main | aside]. On narrow screens: single column in
-   source order (header, identity, main, aside, footer). */
+   [identity | main]. On narrow screens: single column in source
+   order (header, identity, main, footer).
+   
+   Previously three-column with a right-side aside; merged into the
+   landing page in Evening 7 since the right column was redundant
+   with the identity card's contact list. */
 @layer components {
   .site {
-    /* Override Evening 1's simple centered column */
-    max-width: 72rem;          /* ~1152px — wide enough for three columns */
+    /* Override the earlier centered-column baseline */
+    max-width: 64rem;          /* ~1024px — comfortable for two columns */
     padding-block: 3rem;
     padding-inline: 2rem;
     margin-inline: auto;
-
     display: grid;
-    grid-template-columns: 14rem 1fr 12rem;
+    grid-template-columns: 14rem 1fr;
     grid-template-areas:
-      "header   header  header"
-      "identity main    aside"
-      "footer   footer  footer";
+      "header   header"
+      "identity main"
+      "footer   footer";
     column-gap: 3rem;
     row-gap: 2rem;
   }
-
   .site-header   { grid-area: header; }
   .site-identity { grid-area: identity; }
   .site-main     { grid-area: main; }
-  .site-aside    { grid-area: aside; }
   .site-footer   { grid-area: footer; }
-
   
   @media (max-width: 900px) {
     .site {
@@ -198,41 +198,17 @@
         "header"
         "identity"
         "main"
-        "aside"
         "footer";
       max-width: 42rem;
       column-gap: 0;
     }
-
     /* Constrain the identity block so it reads as a card, not a banner */
     .site-identity {
       max-width: 18rem;
       margin-inline: auto;
       padding-block: 1rem;
     }
-
-    /* Same treatment for the aside on mobile — compact card, not full width */
-    .site-aside {
-      max-width: 18rem;
-      margin-inline: auto;
-      padding-block: 1rem;
-    }
   }
-
-  .site-identity .placeholder,
-  .site-aside:empty::before {
-    display: block;
-    padding: 1rem;
-    border: 1px dashed var(--color-border);
-    border-radius: 4px;
-    color: var(--color-fg-subtle);
-    font-size: 0.85rem;
-    text-align: center;
-  }
-  .site-aside:empty::before {
-    content: "[aside slot — empty on this page]";
-  }
-
 }
 
 /* ---------- Identity block  ---------- */
@@ -274,6 +250,32 @@
     font-size: 0.85rem;
   }
 
+  /* ---------- Resume block in the identity aside ----------
+     Two-link actionable surface: view embedded PDF on site, or
+     download to disk. Sits above the generic links list. */
+  .identity-resume {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+  }
+  .identity-resume-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-fg-subtle);
+    margin-bottom: 0.5rem;
+  }
+  .identity-resume-links {
+    font-size: 0.9rem;
+  }
+  .identity-resume-links a {
+    color: var(--color-accent);
+  }
+  .identity-resume-links .sep {
+    color: var(--color-fg-subtle);
+    margin-inline: 0.4rem;
+  }
   .identity-affiliation a {
     color: var(--color-fg);
   }
